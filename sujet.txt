@@ -1,0 +1,59 @@
+En groupe :
+
+Vous devez créer un programme qui résout des labyrinthes.
+Vous devez créer des cartes de labyrinthes sous fichier texte.
+Ces cartes / fichiers seront positionné.e.s  dans un dossier "carte" à la racine du projet.
+Caractères max par ligne : 79
+
+Règles de construction des cartes :
+--------------------------------------
+Les contours de la carte ainsi que les murs sont en "#"
+il doit y avoir 2 zones ouvertes sur la carte : l'entrée et la sortie.
+Une carte à une taille aléatoire.
+
+
+Le quand le jeu démarre :
+Un menu se présente :
+
+Voir l'historique
+Résoudre un labyrinthe
+Quitter
+
+Quand on sélectionne 1 :
+------------------------
+Affiche l'historique des résolutions de labyrinthe au format
+<nom fichier>; <date de résolution>; <temps pour résoudre le labyrinthe>
+
+
+Quand on sélectionne 2 :
+------------------------
+il charge de manière aléatoire une carte du dossier.
+Il fait le calcul pour déterminer le chemin pour aller vers la sortie.
+quand le chemin vers la sortie est trouvé le programme affiche la carte avec le chemin pour aller vers la sortie.
+
+Une fois terminé, le programme enregistre une entrée dans une table d'une base de données
+
+<nom fichier>; <date de résolution>; <temps pour résoudre le labyrinthe>
+
+quand il a enregistré, il déplace le fichier de la carte résolue dans un dossier différents qu'on nommera "resolu"
+
+
+Quand on sélectionne 3 :
+------------------------
+Quitte le programme
+
+
+BONUS : CREER UN GENERATEUR DE MAP (uniquement si vous avez terminé)
+
+
+Consignes :
+-----------
+Le programme doit être modulaire
+Intégrer de la POO
+Intégrer de la gestion d'exception
+Intégrer Sqlite3 (libre de la structure de la base et de la table)
+chaque script doit être passé par Black
+
+
+PROJET DOIT ETRE SOUS GITHUB
+
