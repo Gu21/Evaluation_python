@@ -2,7 +2,6 @@
 
 from controller.History_actions import get_history, drop_history
 from controller.maze_solving import select_map, solve_maze
-from sqlite3 import Error
 
 
 # Display resolution history
