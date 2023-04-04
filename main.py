@@ -10,7 +10,7 @@ def display_history():
 
     # For each row in the database, display the object's attributes
     for row in rows:
-        print(row.read_history())
+        print(row)
 
 
 # Display the solution of a random unsolved map

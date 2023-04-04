@@ -10,6 +10,13 @@ class Labyrinth(object):
         self.path = []
         self.solved = False
 
+    def __str__(self):
+        return f"Labyrinth ({self.nx}x{self.ny})"
+
+    def __repr__(self):
+        return f"object = Labyrinth(open_file)"
+    
+    
     #Creates a matrix containg the labyrinth data from the file
     #Initializes width (nx) and height (ny) of the labyrinth
     #Initializes starting and end positions of the labyrinth
