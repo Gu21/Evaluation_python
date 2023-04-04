@@ -1,0 +1,5 @@
+Axel LAFORGE
+Bastien DAVID
+Guillaume BISSON
+
+https://github.com/Gu21/Evaluation_python

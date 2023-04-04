@@ -2,6 +2,8 @@
 
 from controller.History_actions import get_history, drop_history
 from controller.maze_solving import select_map, solve_maze
+from controller.maze_generating import generate_maze
+from model.Labyrinth import Labyrinth
 
 
 # Display resolution history
@@ -36,7 +38,11 @@ def display_maze_solved():
 # Display the selection menu
 def menu():
     # Menu display
-    print("THE MAZE\n\n1- Show history\n2- Solve a maze\n3- Quit\n")
+    print("\n\nTHE MAZE\n\n"
+          "1- Show history\n"
+          "2- Solve a maze\n"
+          "3- Generate a maze\n"
+          "4- Quit\n")
 
     while True:
         try:
@@ -51,8 +57,12 @@ def menu():
                 case 2:
                     display_maze_solved()
 
-                # Exit
+                # Generate a random maze
                 case 3:
+                    generate_maze()
+
+                # Exit
+                case 4:
                     exit(0)
 
                 # Drop table (for purpose test only)
@@ -61,11 +71,11 @@ def menu():
 
                 # Other cases
                 case other:
-                    print("Incorrect choice, enter a number between 1 and 3")
+                    print("Incorrect choice, enter a number between 1 and 4")
 
         # If the user's choice isn't a number
         except ValueError as v:
-            print("Incorrect choice, enter a number between 1 and 3")
+            print("Incorrect choice, enter a number between 1 and 4")
             print(v)
 
         # If an exception is raised

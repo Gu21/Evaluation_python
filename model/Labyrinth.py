@@ -1,12 +1,16 @@
 # _*_ coding:Utf8 _*_
 
 from time import time
+from random import randint
 
 class Labyrinth(object):
 
     #Constructs a Labyrinth object with an empty path
-    def __init__(self, file):
-        self.import_labyrinth(file)
+    def __init__(self, file=None):
+        if file is not None :
+            self.import_labyrinth(file)
+        else :
+            self.generate_labyrinth()
         self.path = []
         self.solved = False
 
@@ -15,8 +19,90 @@ class Labyrinth(object):
 
     def __repr__(self):
         return f"object = Labyrinth(open_file)"
-    
-    
+
+    def add_walls(self, walls, i, j):
+        if i > 1 and self.lab[i-1][j] == "#":
+            walls.append((i-1, j))
+        if j > 1 and self.lab[i][j-1] == "#":
+            walls.append((i, j-1))
+        if i < self.ny-2 and self.lab[i+1][j] == "#":
+            walls.append((i+1, j))
+        if j < self.nx-2 and self.lab[i][j+1] == "#":
+            walls.append((i, j+1))
+
+    # Generating a perfect maze
+    def generate_labyrinth(self):
+        self.nx = randint(15,100)
+        self.ny = randint(15,100)
+
+        #Initialize a matrix full of walsl
+        self.lab = [["#" for _ in range(self.nx)] for _ in range(self.ny)]
+
+        walls = []
+        cells = []
+
+        #Pick a random cell in the labyrinth
+        cell = (randint(1,self.ny-2),randint(1,self.nx-2))
+        self.lab[cell[0]][cell[1]] = " "
+        cells.append(cell)
+
+        #Add the adjacent walls to the cells to a list of walls
+        self.add_walls(walls,cell[0],cell[1])
+
+        #While the list of walls is not empty
+        while len(walls) > 0:
+            #Pick a random wall in the list
+            wall = walls[randint(0,len(walls)-1)]
+
+            #Check the cells adjacent to the wall
+            adj_cells = self.find_neighbours(wall[0],wall[1])
+            nb_visited = 0
+
+            for c in adj_cells:
+                if c in cells:
+                    nb_visited += 1
+
+            #If the wall has only one neighbouring visited cell
+            #Break the wall and mark is as visited
+            #Add the neighbouring walls to the list
+            if nb_visited == 1:
+                self.lab[wall[0]][wall[1]] = " "
+                cells.append(wall)
+                self.add_walls(walls,wall[0],wall[1])
+
+            #Remove the wall from the list
+            walls.remove(wall)
+
+        self.start = (0,0)
+        self.end = (0,0)
+
+        #Find start and end positions in the outer walls
+        #that have at least one free cell nearby
+        while self.start == self.end:
+            while len(self.find_neighbours(self.start[0],self.start[1])) != 1:
+                self.start = self.find_entrance()
+
+            while len(self.find_neighbours(self.end[0],self.end[1])) != 1:
+                self.end = self.find_entrance()
+
+        self.lab[self.start[0]][self.start[1]] = "S"
+        self.lab[self.end[0]][self.end[1]] = "F"
+
+    #Pick random position in the outer walls of the labyrinth
+    def find_entrance(self):
+        outer_walls = randint(1,4)
+        match outer_walls:
+            case 1:
+                res = (0, randint(1,self.nx-1))
+            case 2:
+                res = (randint(1,self.ny-1), 0)
+            case 3:
+                res = (self.ny-1, randint(1,self.nx-1))
+            case 4:
+                res = (randint(1,self.ny-1), self.nx-1)
+        return res
+
+
     #Creates a matrix containg the labyrinth data from the file
     #Initializes width (nx) and height (ny) of the labyrinth
     #Initializes starting and end positions of the labyrinth
@@ -73,7 +159,7 @@ class Labyrinth(object):
                     if p not in passed_through:
                         self.recursive_solve(passed_through, p)
 
-                #Remove current position from the path 
+                #Remove current position from the path
                 # can't continue from this pos)
                 if not self.solved:
                     self.path.pop()
